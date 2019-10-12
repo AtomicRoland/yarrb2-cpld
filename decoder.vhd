@@ -419,10 +419,11 @@ architecture Behavioral of decoder is
 	leds <= ledBFFD;
    
 	-- read registers
-	DD <= ledBFFD when (BFFX = '1' and RW = '1' and A1 = '0' and A0 = '1') else
-         regBFFE when (BFFX = '1' and RW = '1' and A1 = '1' and A0 = '0') else
-         regBFFF when (BFFX = '1' and RW = '1' and A1 = '1' and A0 = '1') else
-         (others => 'Z');
+ DD <= (others => 'Z') when BFFX = '0' or RW = '0' else
+         ledBFFD         when A1 = '0' and A0 = '1'  else
+         regBFFE         when A1 = '1' and A0 = '0'  else
+         regBFFF         when A1 = '1' and A0 = '1'  else
+         (others => '0');
 
 end Behavioral;
 
