@@ -1,16 +1,15 @@
-NET "A9"  BUFG=DATA_GATE;
+NET "ClkIn" BUFG=DATA_GATE;
 NET "A11" BUFG=DATA_GATE;
-NET "A12" BUFG=DATA_GATE;
 NET "A15" BUFG=DATA_GATE;
 
-NET "DD(0)"	   LOC = "P9";
-NET "DD(1)"	   LOC = "P10";
-NET "DD(2)"	   LOC = "P11";
-NET "DD(3)"	   LOC = "P12";
-NET "DD(4)"	   LOC = "P13";
-NET "DD(5)"	   LOC = "P14";
-NET "DD(6)"	   LOC = "P15";
-NET "DD(7)"	   LOC = "P16";
+NET "DD(0)"	   LOC = "P20";
+NET "DD(1)"	   LOC = "P21";
+NET "DD(2)"	   LOC = "P9";
+NET "DD(3)"	   LOC = "P10";
+NET "DD(4)"	   LOC = "P28";
+NET "DD(5)"	   LOC = "P49";
+NET "DD(6)"	   LOC = "P2";
+NET "DD(7)"	   LOC = "P3";
 
 NET "A15"	   LOC = "P38";
 NET "A14"	   LOC = "P35";
@@ -18,28 +17,28 @@ NET "A13"   	LOC = "P34";
 NET "A12"	   LOC = "P33";
 NET "A11"	   LOC = "P32";
 NET "A10"   	LOC = "P31";
-NET "A9" 		LOC = "P30";
-NET "A8"		   LOC = "P28";
+NET "A9" 		LOC = "P14";
+NET "A8"		   LOC = "P13";
 NET "A7"	   	LOC = "P27";
 NET "A6" 		LOC = "P26";
 NET "A5"		   LOC = "P25";
 NET "A4"	   	LOC = "P24";
 NET "A3"		   LOC = "P23";
 NET "A2"		   LOC = "P22";
-NET "A1"		   LOC = "P21";
-NET "A0"		   LOC = "P20";
+NET "A1"		   LOC = "P12";
+NET "A0"		   LOC = "P11";
 
-NET "ClkIn"	   LOC = "P7";
+NET "ClkIn"	   LOC = "P30";
 NET "Phi2"	   LOC = "P6";
 NET "ClkOut"	LOC = "P5";
-NET "nBUFEN"	LOC = "P49";
+NET "nBUFEN"	LOC = "P19";
 NET "NRDS"	   LOC = "P46";
 NET "NWDS"	   LOC = "P48";
 NET "Reset"	   LOC = "P4";
 NET "RW"		   LOC = "P45";
 
-NET "CSRAM"	   LOC = "P2";
-NET "CSROM"	   LOC = "P3";
+NET "CSRAM"	   LOC = "P15";
+NET "CSROM"	   LOC = "P16";
 
 NET "RA16"	   LOC = "P44";
 NET "RA15"	   LOC = "P43";

@@ -27,7 +27,7 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 
-entity yarrb is
+entity decoder is
     Port ( 
 		DD:		inout	STD_LOGIC_VECTOR (7 downto 0);
       leds:		out	STD_LOGIC_VECTOR (7 downto 0);
@@ -65,9 +65,9 @@ entity yarrb is
 		NRDS:		out	STD_LOGIC;
 		ClkOut: 	out	STD_LOGIC
 		);
-end yarrb;
+end decoder;
 
-architecture Behavioral of yarrb is
+architecture Behavioral of decoder is
 	signal ClkDiv: 				STD_LOGIC_VECTOR(1 downto 0);
 	signal regBFFE, regBFFF :	STD_LOGIC_VECTOR(7 downto 0);
    signal ledBFFD:            STD_LOGIC_VECTOR(7 downto 0);
