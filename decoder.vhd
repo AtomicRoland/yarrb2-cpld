@@ -69,7 +69,8 @@ end decoder;
 
 architecture Behavioral of decoder is
 	signal ClkDiv: 				STD_LOGIC_VECTOR(1 downto 0);
-	signal regBFFE, regBFFF :	STD_LOGIC_VECTOR(7 downto 0);
+   signal regBFFF:	         STD_LOGIC_VECTOR(7 downto 0);
+	signal regBFFE:            STD_LOGIC_VECTOR(7 downto 0) := x"06";
    signal ledBFFD:            STD_LOGIC_VECTOR(7 downto 0);
    signal BFFX:               STD_LOGIC;
 	signal RD, WR, WP:			STD_LOGIC;
@@ -82,7 +83,7 @@ architecture Behavioral of decoder is
       process (A15, A14, A13, A12, A11, A10, A9, A8, A7, A6, A5, A4, A3, A2)
       begin
       -- select #BFFx
-         if (A15='1' and A14='0' and A13='1' and A12='1' and A11='1' and A10='1' and A9='1' and A8='1' and A7='1' and A6='1' and A5='1' and A4='1' and A3='0' and A2='0') then
+         if (A15='1' and A14='0' and A13='1' and A12='1' and A11='1' and A10='1' and A9='1' and A8='1' and A7='1' and A6='1' and A5='1' and A4='1' and A3='1' and A2='1') then
             BFFX <= '1';
          else
             BFFX <= '0';
