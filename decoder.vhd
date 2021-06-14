@@ -73,6 +73,7 @@ architecture Behavioral of decoder is
 	signal regBFFE:            STD_LOGIC_VECTOR(7 downto 0) := x"06";
    signal ledBFFD:            STD_LOGIC_VECTOR(7 downto 0);
    signal BFFX:               STD_LOGIC;
+   signal nBXXX:              STD_LOGIC;
 	signal RD, WR, WP:			STD_LOGIC;
 	signal BS0, BS1, BS2:		STD_LOGIC;
 	signal XMA0, XMA1, XMA2:	STD_LOGIC;
