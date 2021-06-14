@@ -68,11 +68,12 @@ entity decoder is
 end decoder;
 
 architecture Behavioral of decoder is
-	signal ClkDiv: 				STD_LOGIC_VECTOR(1 downto 0);
+	signal ClkDiv: 				STD_LOGIC_VECTOR(2 downto 0);
    signal regBFFF:	         STD_LOGIC_VECTOR(7 downto 0);
 	signal regBFFE:            STD_LOGIC_VECTOR(7 downto 0) := x"06";
    signal ledBFFD:            STD_LOGIC_VECTOR(7 downto 0);
    signal BFFX:               STD_LOGIC;
+   signal nBXXX:              STD_LOGIC;
 	signal RD, WR, WP:			STD_LOGIC;
 	signal BS0, BS1, BS2:		STD_LOGIC;
 	signal XMA0, XMA1, XMA2:	STD_LOGIC;
@@ -152,31 +153,48 @@ architecture Behavioral of decoder is
 			WR <= '1';
 		end if;
 	end process;
+	
 
-	process(ClkIn, TurboMode, ClkSel, ClkDiv)
+   -- Set nBXXX to 0 for addresses in the ranges B000-B3FF and B800-BBFF
+	-- the clock will be slowed to 1MHz for these addresses
+	process (A15, A14, A13, A12, A10)
+	begin
+		nBXXX <= not(A15 and not A14 and A13 and A12 and not A10);
+	end process;
+	
+	-- Generate the 1/2/4 MHz clock taking into account the clock select bits
+	-- and slowing to 1MHz if the current address is in the range indicated
+	-- by nBXXX
+	process(ClkIn, ClkSel, TurboMode, nBXXX, ClkDiv)
 	begin
 		if falling_edge(ClkIn) then
-			ClkDiv <= STD_LOGIC_VECTOR(unsigned(ClkDiv) + 1);
-			-- read clock select bits from #BFFE when counter is zero,
-			-- that way we can garantee that the PHI0 pin is low
-			if ClkDiv = b"00" then
-				TurboMode <= regBFFE(5);
+			if unsigned(ClkDiv) = 0 then
+				-- read clock select bits from #BFFE when counter is zero,
+				-- that way we can garantee that the PHI0 pin is low
 				ClkSel <= regBFFE(6);
+				TurboMode <= regBFFE(5);
+			end if;
+			if nBXXX = '0' then
+				-- 1 MHz for IO
+    			ClkDiv <= STD_LOGIC_VECTOR(unsigned(ClkDiv) + 1);
+			elsif ClkSel = '1' then
+				-- 2 MHz
+				ClkDiv <= STD_LOGIC_VECTOR(unsigned(ClkDiv) + 2);
+			elsif TurboMode = '1' then
+			    -- 4 MHz
+				 ClkDiv <= (others => '0');
+			else
+				-- 1 MHz
+				ClkDiv <= STD_LOGIC_VECTOR(unsigned(ClkDiv) + 1);
 			end if;
 		end if;
-	
-		-- Clock divider to 1, 2 and 4 MHz clock signals
-		if (TurboMode = '0') then
-			if (ClkSel = '0') then
-				ClkOut <= ClkDiv(1);
-			else
-				ClkOut <= ClkDiv(0);
-			end if;
-		else
+		if (TurboMode = '1' and nBXXX = '1') then
 			ClkOut <= ClkIn;
+		else
+			ClkOut <= ClkDiv(1);
 		end if;
 	end process;
-
+	
 	process (A15, A14, A13, A12, A11, A10, A9, A8, BS0, BS1, BS2, XMA0, XMA1, XMA2, MP0, MP1, BFFX)
 	begin
 
